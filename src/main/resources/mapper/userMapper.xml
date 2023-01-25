@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.newadmin.mapper.PtUserMapper">
+
+    <resultMap type="PtUser" id="PtUserResult">
+        <result property="id"    column="id"    />
+        <result property="username"    column="username"    />
+        <result property="password"    column="password"    />
+        <result property="sex"    column="sex"    />
+        <result property="phone"    column="phone"    />
+        <result property="birthTime"    column="birth_time"    />
+        <result property="root"    column="root"    />
+    </resultMap>
+
+    <sql id="selectPtUserVo">
+        select id, username, password, sex, phone, birth_time, root from pt_user
+    </sql>
+
+    <select id="selectPtUserList" parameterType="PtUser" resultMap="PtUserResult">
+        <include refid="selectPtUserVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="username != null  and username != ''"> and username = #{username}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="root != null "> and root = #{root}</if>
+        </where>
+    </select>
+
+    <select id="selectPtUserById" parameterType="Long" resultMap="PtUserResult">
+        <include refid="selectPtUserVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPtUser" parameterType="PtUser" useGeneratedKeys="true" keyProperty="id">
+        insert into pt_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">username,</if>
+            <if test="password != null">password,</if>
+            <if test="sex != null">sex,</if>
+            <if test="phone != null">phone,</if>
+            <if test="birthTime != null">birth_time,</if>
+            <if test="root != null">root,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">#{username},</if>
+            <if test="password != null">#{password},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="birthTime != null">#{birthTime},</if>
+            <if test="root != null">#{root},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePtUser" parameterType="PtUser">
+        update pt_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="birthTime != null">birth_time = #{birthTime},</if>
+            <if test="root != null">root = #{root},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePtUserById" parameterType="Long">
+        delete from pt_user where id = #{id}
+    </delete>
+
+    <delete id="deletePtUserByIds" parameterType="String">
+        delete from pt_user where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
