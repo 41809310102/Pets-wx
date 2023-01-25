@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.newadmin.mapper.PtHospMapper">
+
+    <resultMap type="PtHosp" id="PtHospResult">
+        <result property="id"    column="id"    />
+        <result property="hospName"    column="hosp_name"    />
+        <result property="hospLocal"    column="hosp_local"    />
+        <result property="pic"    column="pic"    />
+        <result property="hospDesc"    column="hosp_desc"    />
+        <result property="price"    column="price"    />
+    </resultMap>
+
+    <sql id="selectPtHospVo">
+        select id, hosp_name, hosp_local, pic, hosp_desc, price from pt_hosp
+    </sql>
+
+    <select id="selectPtHospList" parameterType="PtHosp" resultMap="PtHospResult">
+        <include refid="selectPtHospVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="hospName != null  and hospName != ''"> and hosp_name like concat('%', #{hospName}, '%')</if>
+            <if test="hospLocal != null  and hospLocal != ''"> and hosp_local like concat('%', #{hospLocal}, '%')</if>
+            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
+            <if test="hospDesc != null  and hospDesc != ''"> and hosp_desc like concat('%', #{hospDesc}, '%')</if>
+            <if test="price != null "> and price = #{price}</if>
+        </where>
+    </select>
+
+    <select id="selectPtHospById" parameterType="Long" resultMap="PtHospResult">
+        <include refid="selectPtHospVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPtHosp" parameterType="PtHosp" useGeneratedKeys="true" keyProperty="id">
+        insert into pt_hosp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hospName != null">hosp_name,</if>
+            <if test="hospLocal != null">hosp_local,</if>
+            <if test="pic != null and pic != ''">pic,</if>
+            <if test="hospDesc != null and hospDesc != ''">hosp_desc,</if>
+            <if test="price != null">price,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hospName != null">#{hospName},</if>
+            <if test="hospLocal != null">#{hospLocal},</if>
+            <if test="pic != null and pic != ''">#{pic},</if>
+            <if test="hospDesc != null and hospDesc != ''">#{hospDesc},</if>
+            <if test="price != null">#{price},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePtHosp" parameterType="PtHosp">
+        update pt_hosp
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hospName != null">hosp_name = #{hospName},</if>
+            <if test="hospLocal != null">hosp_local = #{hospLocal},</if>
+            <if test="pic != null and pic != ''">pic = #{pic},</if>
+            <if test="hospDesc != null and hospDesc != ''">hosp_desc = #{hospDesc},</if>
+            <if test="price != null">price = #{price},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePtHospById" parameterType="Long">
+        delete from pt_hosp where id = #{id}
+    </delete>
+
+    <delete id="deletePtHospByIds" parameterType="String">
+        delete from pt_hosp where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
