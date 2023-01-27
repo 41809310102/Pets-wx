@@ -5,6 +5,7 @@ import com.example.newadmin.service.IPtUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +30,7 @@ public class PtUserController
     /**
      * 用户注册
      * */
-    @PostMapping("/register")
+    @GetMapping("/register")
     @ResponseBody
     public HashMap<String,Object> addSave(PtUser ptUser)
     {
@@ -65,6 +66,7 @@ public class PtUserController
             if(list.size()>0){
                 map.put("code",1);
                 map.put("msg","身份验证成功");
+                map.put("user",list.get(0));
             }else{
                 map.put("code",-1);
                 map.put("msg","身份验证失败");
@@ -81,7 +83,7 @@ public class PtUserController
     /**
      * 用户注册
      * */
-    @PostMapping("/updateinfo")
+    @GetMapping("/updateinfo")
     @ResponseBody
     public HashMap<String,Object> updateinfo(PtUser ptUser)
     {
@@ -101,5 +103,50 @@ public class PtUserController
         }
         return map;
     }
+
+    /**
+     * 检查用户名是否注册
+     * */
+    @PostMapping("/checkname")
+    @ResponseBody
+    public String checkname(String username)
+    {
+        PtUser ptUser = new PtUser();
+        ptUser.setUsername(username);
+        try {
+            List<PtUser> list = ptUserService.selectPtUserList(ptUser);
+            if(list.size()>0){
+                return "yes";
+            }else{
+                return "no";
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            return "yes";
+        }
+    }
+
+    /**
+     * 检查电话号码是否注册
+     * */
+    @PostMapping("/checkphone")
+    @ResponseBody
+    public String checkphone(String phone)
+    {
+        PtUser ptUser = new PtUser();
+        ptUser.setPhone(phone);
+        try{
+            List<PtUser> list = ptUserService.selectPtUserList(ptUser);
+            if(list.size()>0){
+                return "yes";
+            }else{
+                return "no";
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            return "yes";
+        }
+    }
+
 
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.newadmin.mapper.PtFuwuShopMapper">
+
+    <resultMap type="PtFuwuShop" id="PtFuwuShopResult">
+        <result property="id"    column="id"    />
+        <result property="fid"    column="fid"    />
+        <result property="title"    column="title"    />
+        <result property="shopDesc"    column="shop_desc"    />
+        <result property="price"    column="price"    />
+        <result property="pic"    column="pic"    />
+    </resultMap>
+
+    <sql id="selectPtFuwuShopVo">
+        select id, fid, title, shop_desc, price, pic from pt_fuwu_shop
+    </sql>
+
+    <select id="selectPtFuwuShopList" parameterType="PtFuwuShop" resultMap="PtFuwuShopResult">
+        <include refid="selectPtFuwuShopVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="fid != null "> and fid = #{fid}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="shopDesc != null  and shopDesc != ''"> and shop_desc = #{shopDesc}</if>
+            <if test="price != null  and price != ''"> and price = #{price}</if>
+            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
+        </where>
+    </select>
+
+    <select id="selectPtFuwuShopById" parameterType="Long" resultMap="PtFuwuShopResult">
+        <include refid="selectPtFuwuShopVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPtFuwuShop" parameterType="PtFuwuShop" useGeneratedKeys="true" keyProperty="id">
+        insert into pt_fuwu_shop
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fid != null">fid,</if>
+            <if test="title != null">title,</if>
+            <if test="shopDesc != null">shop_desc,</if>
+            <if test="price != null">price,</if>
+            <if test="pic != null">pic,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fid != null">#{fid},</if>
+            <if test="title != null">#{title},</if>
+            <if test="shopDesc != null">#{shopDesc},</if>
+            <if test="price != null">#{price},</if>
+            <if test="pic != null">#{pic},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePtFuwuShop" parameterType="PtFuwuShop">
+        update pt_fuwu_shop
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fid != null">fid = #{fid},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="shopDesc != null">shop_desc = #{shopDesc},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="pic != null">pic = #{pic},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePtFuwuShopById" parameterType="Long">
+        delete from pt_fuwu_shop where id = #{id}
+    </delete>
+
+    <delete id="deletePtFuwuShopByIds" parameterType="String">
+        delete from pt_fuwu_shop where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

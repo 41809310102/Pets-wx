@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.newadmin.mapper.PtPetMapper">
+
+    <resultMap type="PtPet" id="PtPetResult">
+        <result property="id"    column="id"    />
+        <result property="petName"    column="pet_name"    />
+        <result property="petAge"    column="pet_age"    />
+        <result property="sex"    column="sex"    />
+        <result property="pic"    column="pic"    />
+        <result property="birthTime"    column="birth_time"    />
+        <result property="masterId"    column="master_id"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectPtPetVo">
+        select id, pet_name, pet_age, sex, pic, birth_time, master_id, type from pt_pet
+    </sql>
+
+    <select id="selectPtPetList" parameterType="PtPet" resultMap="PtPetResult">
+        <include refid="selectPtPetVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="petName != null  and petName != ''"> and pet_name like concat('%', #{petName}, '%')</if>
+            <if test="petAge != null  and petAge != ''"> and pet_age = #{petAge}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
+            <if test="birthTime != null  and birthTime != ''"> and birth_time = #{birthTime}</if>
+            <if test="masterId != null "> and master_id = #{masterId}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+        </where>
+    </select>
+
+    <select id="selectPtPetById" parameterType="Long" resultMap="PtPetResult">
+        <include refid="selectPtPetVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPtPet" parameterType="PtPet" useGeneratedKeys="true" keyProperty="id">
+        insert into pt_pet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="petName != null">pet_name,</if>
+            <if test="petAge != null">pet_age,</if>
+            <if test="sex != null">sex,</if>
+            <if test="pic != null">pic,</if>
+            <if test="birthTime != null">birth_time,</if>
+            <if test="masterId != null">master_id,</if>
+            <if test="type != null">type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="petName != null">#{petName},</if>
+            <if test="petAge != null">#{petAge},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="pic != null">#{pic},</if>
+            <if test="birthTime != null">#{birthTime},</if>
+            <if test="masterId != null">#{masterId},</if>
+            <if test="type != null">#{type},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePtPet" parameterType="PtPet">
+        update pt_pet
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="petName != null">pet_name = #{petName},</if>
+            <if test="petAge != null">pet_age = #{petAge},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="pic != null">pic = #{pic},</if>
+            <if test="birthTime != null">birth_time = #{birthTime},</if>
+            <if test="masterId != null">master_id = #{masterId},</if>
+            <if test="type != null">type = #{type},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePtPetById" parameterType="Long">
+        delete from pt_pet where id = #{id}
+    </delete>
+
+    <delete id="deletePtPetByIds" parameterType="String">
+        delete from pt_pet where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
