@@ -77,7 +77,8 @@ public class PtHospServiceImpl implements IPtHospService
     @Override
     public int deletePtHospByIds(String ids)
     {
-        return ptHospMapper.deletePtHospByIds(new String[9]);
+        String[] str = ids.split(",");
+        return ptHospMapper.deletePtHospByIds(str);
     }
 
     /**

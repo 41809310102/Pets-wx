@@ -77,7 +77,8 @@ public class PtFuwuServiceImpl implements IPtFuwuService
     @Override
     public int deletePtFuwuByIds(String ids)
     {
-        return ptFuwuMapper.deletePtFuwuByIds(new String[5]);
+        String[] str = ids.split(",");
+        return ptFuwuMapper.deletePtFuwuByIds(str);
     }
 
     /**

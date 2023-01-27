@@ -77,7 +77,8 @@ public class PtOrderServiceImpl implements IPtOrderService
     @Override
     public int deletePtOrderByIds(String ids)
     {
-        return ptOrderMapper.deletePtOrderByIds(new String[12]);
+        String[] str = ids.split(",");
+        return ptOrderMapper.deletePtOrderByIds(str);
     }
 
     /**

@@ -2,11 +2,11 @@ package com.example.newadmin.controller;
 
 import java.util.HashMap;
 import java.util.List;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +19,7 @@ import com.example.newadmin.service.IPtFuwuShopService;
  * @author root
  * @date 2023-01-26
  */
+@Api(value="宠物小类controller",tags={"宠物服务小类具体管理"})
 @Controller
 @RequestMapping("/api/shop")
 public class PtFuwuShopController
@@ -33,6 +34,7 @@ public class PtFuwuShopController
     /**
      * 查询服务信息列表
      */
+    @ApiOperation("查询服务信息列表")
     @PostMapping("/list")
     @ResponseBody
     public  HashMap<String,Object> list(PtFuwuShop ptFuwuShop)
@@ -47,6 +49,7 @@ public class PtFuwuShopController
     /**
      * 新增保存服务信息
      */
+    @ApiOperation("新增宠物服务信息")
     @PostMapping("/add")
     @ResponseBody
     public HashMap<String,Object> addSave(PtFuwuShop ptFuwuShop)
@@ -72,6 +75,7 @@ public class PtFuwuShopController
     /**
      * 修改保存服务信息
      */
+    @ApiOperation("修改宠物服务信息")
     @PostMapping("/edit")
     @ResponseBody
     public HashMap<String,Object> editSave(PtFuwuShop ptFuwuShop)
@@ -96,6 +100,7 @@ public class PtFuwuShopController
     /**
      * 删除服务信息
      */
+    @ApiOperation("删除宠物服务信息")
     @PostMapping( "/remove")
     @ResponseBody
     public HashMap<String,Object> remove(String ids)

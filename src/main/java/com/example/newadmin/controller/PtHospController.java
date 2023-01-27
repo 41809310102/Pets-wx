@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.newadmin.domain.PtUser;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +24,7 @@ import com.example.newadmin.service.IPtHospService;
  * @author root
  * @date 2023-01-25
  */
+@Api(value="宠物医院controller",tags={"宠物医院信息管理"})
 @Controller
 @RequestMapping("/api/hosp")
 public class PtHospController
@@ -36,7 +39,7 @@ public class PtHospController
     /**
      * 查询宠物医院信息表列表
      */
-
+    @ApiOperation("查询宠物医院信息")
     @PostMapping("/get_all_hosp")
     @ResponseBody
     public HashMap<String,Object> list(PtHosp ptHosp)
@@ -51,7 +54,7 @@ public class PtHospController
     /**
      * 新增保存宠物医院信息表
      */
-
+    @ApiOperation("新增宠物医院信息")
     @PostMapping("/add_hosp")
     @ResponseBody
     public HashMap<String,Object> addSave(PtHosp ptHosp)
@@ -75,7 +78,7 @@ public class PtHospController
 
 
 
-
+    @ApiOperation("修改宠物医院信息")
     @PostMapping("/edit")
     @ResponseBody
     public HashMap<String,Object> editSave(PtHosp ptHosp)
@@ -94,6 +97,7 @@ public class PtHospController
     /**
      * 删除宠物医院信息表
      */
+    @ApiOperation("删除宠物医院信息")
     @PostMapping( "/remove")
     @ResponseBody
     public HashMap<String,Object> remove(String ids)

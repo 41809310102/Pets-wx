@@ -76,7 +76,8 @@ public class PtFuwuShopServiceImpl implements IPtFuwuShopService
     @Override
     public int deletePtFuwuShopByIds(String ids)
     {
-        return ptFuwuShopMapper.deletePtFuwuShopByIds(new String[3]);
+        String[] str = ids.split(",");
+        return ptFuwuShopMapper.deletePtFuwuShopByIds(str);
     }
 
     /**

@@ -1,7 +1,10 @@
 package com.example.newadmin.controller;
 
+import com.example.newadmin.domain.PtOrder;
 import com.example.newadmin.domain.PtUser;
 import com.example.newadmin.service.IPtUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -20,6 +23,8 @@ import java.util.List;
  * @author user
  * @date 2023-01-25
  */
+
+@Api(value="用户controller",tags={"用户管理"})
 @Controller
 @RequestMapping("/api/user")
 public class PtUserController
@@ -30,6 +35,8 @@ public class PtUserController
     /**
      * 用户注册
      * */
+
+    @ApiOperation("增加新的用户")
     @GetMapping("/register")
     @ResponseBody
     public HashMap<String,Object> addSave(PtUser ptUser)
@@ -54,6 +61,7 @@ public class PtUserController
     /**
      * 用户登录
      * */
+    @ApiOperation("用户登录")
     @PostMapping("/login")
     @ResponseBody
     public HashMap<String,Object> login(String username, String password)
@@ -81,8 +89,24 @@ public class PtUserController
 
 
     /**
-     * 用户注册
+     * 查询所有用户信息
+     */
+    @ApiOperation("查询所有用户信息")
+    @PostMapping("/list")
+    @ResponseBody
+    public HashMap<String,Object>  list(PtUser ptUser)
+    {
+        List<PtUser> list = ptUserService.selectPtUserList(ptUser);
+        map.put("code",1);
+        map.put("msg","查询成功");
+        map.put("data",list);
+        return map;
+    }
+
+    /**
+     *
      * */
+    @ApiOperation("用户信息修改")
     @GetMapping("/updateinfo")
     @ResponseBody
     public HashMap<String,Object> updateinfo(PtUser ptUser)
@@ -107,6 +131,7 @@ public class PtUserController
     /**
      * 检查用户名是否注册
      * */
+    @ApiOperation("检查某个用户名是否注册")
     @PostMapping("/checkname")
     @ResponseBody
     public String checkname(String username)
@@ -129,6 +154,7 @@ public class PtUserController
     /**
      * 检查电话号码是否注册
      * */
+    @ApiOperation("检查某个电话号码是否注册")
     @PostMapping("/checkphone")
     @ResponseBody
     public String checkphone(String phone)

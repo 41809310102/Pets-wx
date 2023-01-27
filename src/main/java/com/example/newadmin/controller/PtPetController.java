@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.newadmin.domain.PtOrder;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import com.example.newadmin.service.IPtPetService;
  * @author root
  * @date 2023-01-26
  */
+@Api(value="宠物controller",tags={"宠物信息管理"})
 @Controller
 @RequestMapping("/api/pet")
 public class PtPetController
@@ -36,6 +39,7 @@ public class PtPetController
     /**
      * 查询宠物信息表列表
      */
+    @ApiOperation("查询宠物信息")
     @PostMapping("/list")
     @ResponseBody
     public HashMap<String, Object> list(PtPet ptPet)
@@ -50,7 +54,7 @@ public class PtPetController
     /**
      * 新增保存宠物信息表
      */
-
+    @ApiOperation("新增宠物信息")
     @GetMapping("/add")
     @ResponseBody
     public HashMap<String, Object> addSave(PtPet ptPet)
@@ -76,6 +80,7 @@ public class PtPetController
     /**
      * 修改保存宠物信息表
      */
+    @ApiOperation("修改宠物信息")
     @PostMapping("/edit")
     @ResponseBody
     public HashMap<String, Object> editSave(PtPet ptPet)
@@ -99,6 +104,7 @@ public class PtPetController
     /**
      * 删除宠物信息表
      */
+    @ApiOperation("删除宠物信息")
     @PostMapping( "/remove")
     @ResponseBody
     public HashMap<String, Object> remove(String ids)
@@ -122,6 +128,7 @@ public class PtPetController
     /**
      * 获取用户个人的宠物信息
      * */
+    @ApiOperation("获取用户个人的宠物信息")
     @PostMapping("/getmypets")
     @ResponseBody
     public HashMap<String,Object> getUserpets(Long masterid)

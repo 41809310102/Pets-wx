@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.newadmin.domain.PtUser;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +25,7 @@ import com.example.newadmin.service.IPtOrderService;
  * @author root
  * @date 2023-01-26
  */
+@Api(value="预约订单controller",tags={"预约订单信息管理"})
 @Controller
 @RequestMapping("/api/order")
 public class PtOrderController {
@@ -36,6 +39,7 @@ public class PtOrderController {
     /**
      * 查询预约订单信息列表
      */
+    @ApiOperation("查询预约订单信息")
     @PostMapping("/list")
     @ResponseBody
     public HashMap<String,Object>  list(PtOrder ptOrder)
@@ -51,6 +55,7 @@ public class PtOrderController {
     /**
      * 新增保存预约订单信息
      */
+    @ApiOperation("新增预约订单")
     @GetMapping("/add")
     @ResponseBody
     public HashMap<String,Object> addSave(PtOrder ptOrder)
@@ -76,6 +81,7 @@ public class PtOrderController {
     /**
      * 修改保存预约订单信息
      */
+    @ApiOperation("修改预约订单信息")
     @GetMapping("/edit")
     @ResponseBody
     public HashMap<String,Object> editSave(PtOrder ptOrder)
@@ -100,6 +106,7 @@ public class PtOrderController {
     /**
      * 删除预约订单信息
      */
+    @ApiOperation("删除预约订单信息")
     @PostMapping( "/remove")
     @ResponseBody
     public HashMap<String,Object>  remove(String ids)

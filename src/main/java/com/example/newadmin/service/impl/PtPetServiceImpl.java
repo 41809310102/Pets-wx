@@ -77,7 +77,8 @@ public class PtPetServiceImpl implements IPtPetService
     @Override
     public int deletePtPetByIds(String ids)
     {
-        return ptPetMapper.deletePtPetByIds(new String[6]);
+        String[] str = ids.split(",");
+        return ptPetMapper.deletePtPetByIds(str);
     }
 
     /**

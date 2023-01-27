@@ -3,6 +3,8 @@ package com.example.newadmin.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,7 @@ import com.example.newadmin.service.IPtFuwuService;
  * @author root
  * @date 2023-01-26
  */
+@Api(value="服务大类管理controller",tags={"宠物服务大类管理"})
 @Controller
 @RequestMapping("/api/fuwu")
 public class PtFuwuController
@@ -34,7 +37,7 @@ public class PtFuwuController
     /**
      * 查询医院服务信息表列表
      */
-
+    @ApiOperation("查询所有医院服务信息表列表")
     @PostMapping("/list")
     @ResponseBody
     public HashMap<String,Object> list(PtFuwu ptFuwu)
@@ -52,7 +55,7 @@ public class PtFuwuController
     /**
      * 新增保存医院服务信息表
      */
-
+    @ApiOperation("新增宠物医院服务")
     @PostMapping("/add")
     @ResponseBody
     public HashMap<String,Object> addSave(PtFuwu ptFuwu)
@@ -77,6 +80,7 @@ public class PtFuwuController
     /**
      * 修改保存医院服务信息表
      */
+    @ApiOperation("修改某个宠物医院服务信息")
     @PostMapping("/edit")
     @ResponseBody
     public HashMap<String,Object> editSave(PtFuwu ptFuwu)
@@ -101,6 +105,7 @@ public class PtFuwuController
     /**
      * 删除医院服务信息表
      */
+    @ApiOperation("删除某个医院服务信息")
     @PostMapping( "/remove")
     @ResponseBody
     public HashMap<String,Object> remove(String ids)
